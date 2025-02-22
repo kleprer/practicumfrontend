@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 import './App.css'
 import Webcam from 'react-webcam'
-import { Holistic, POSE_LANDMARKS, POSE_CONNECTIONS } from '@mediapipe/holistic'
+import { Holistic, POSE_LANDMARKS, HAND_CONNECTIONS, POSE_CONNECTIONS } from '@mediapipe/holistic'
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils'
 import { Camera } from '@mediapipe/camera_utils'
 
@@ -49,11 +49,19 @@ const MPStart = () => {
       canvasCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
       canvasCtx.drawImage(results.image, 0, 0, canvasRef.current.width, canvasRef.current.height)
     if (results.poseLandmarks) {
-      drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS, { color: 'white', lineWidth: 2})
-      drawLandmarks(canvasCtx, results.poseLandmarks, { color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3 })
+      // drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS, { color: 'white', lineWidth: 2 })
+      // drawLandmarks(canvasCtx, results.poseLandmarks, { color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3 })
+      drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS, {color: 'white', lineWidth: 2});
+      drawLandmarks(canvasCtx, results.leftHandLandmarks, {color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3});
+      drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS,{color: 'white', lineWidth: 2});
+      drawLandmarks(canvasCtx, results.rightHandLandmarks, {color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3});
     }
+
+    
     canvasCtx.restore()
   }
+
+  
 
   return (
     <div >
