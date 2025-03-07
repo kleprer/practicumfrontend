@@ -74,6 +74,8 @@ button:focus-visible {
   background-color:#a5a7c4;
   border-radius: 10px;
   opacity: 30%;
+  padding: auto;
+  text-align: center;
 }
 
 .options {
@@ -96,5 +98,7 @@ button:focus-visible {
 
 p {
   margin: auto;
-
+  width: inherit;
+  height: inherit;
+  padding: 7px;
 }
