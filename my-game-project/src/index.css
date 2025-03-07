@@ -66,3 +66,35 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+.btn {
+  width: 25vw;
+  height: 6vh;
+  background-color:#a5a7c4;
+  border-radius: 10px;
+  opacity: 30%;
+}
+
+.options {
+  padding: 1em;
+  position: absolute;
+  top: 60%;
+  display: flex;
+  column-gap: 5vw;
+  align-items: center;
+  justify-content: space-between;
+  align-content: center;
+  width: inherit;
+}
+
+.vidwin {
+  position: relative;
+  width:720px;
+  height:480px;
+}
+
+p {
+  margin: auto;
+
+}

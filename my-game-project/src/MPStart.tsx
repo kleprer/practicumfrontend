@@ -49,8 +49,6 @@ const MPStart = () => {
       canvasCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
       canvasCtx.drawImage(results.image, 0, 0, canvasRef.current.width, canvasRef.current.height)
     if (results.poseLandmarks) {
-      // drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS, { color: 'white', lineWidth: 2 })
-      // drawLandmarks(canvasCtx, results.poseLandmarks, { color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3 })
       drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS, {color: 'white', lineWidth: 2});
       drawLandmarks(canvasCtx, results.leftHandLandmarks, {color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3});
       drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS,{color: 'white', lineWidth: 2});
