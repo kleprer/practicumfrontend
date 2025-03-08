@@ -48,11 +48,34 @@ const MPStart = () => {
       canvasCtx.save()
       canvasCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
       canvasCtx.drawImage(results.image, 0, 0, canvasRef.current.width, canvasRef.current.height)
+      const leftHandLandmarks = results.leftHandLandmarks;
+      const rightHandLandmarks = results.rightHandLandmarks;
     if (results.poseLandmarks) {
+        // Drawing hand landmarks
+        
       drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS, {color: 'white', lineWidth: 2});
       drawLandmarks(canvasCtx, results.leftHandLandmarks, {color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3});
       drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS,{color: 'white', lineWidth: 2});
       drawLandmarks(canvasCtx, results.rightHandLandmarks, {color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3});
+      
+
+      if (leftHandLandmarks)  {
+        const leftHandCoords = leftHandLandmarks.map((landmark: any) => ({
+        x: landmark.x,
+        y: landmark.y
+      }));
+      console.log('Left Hand Coordinates:', leftHandCoords);
+      }
+      
+      if (rightHandLandmarks)  {
+        const rightHandCoords = leftHandLandmarks.map((landmark: any) => ({
+        x: landmark.x,
+        y: landmark.y
+      }));
+      console.log('Right Hand Coordinates:', rightHandCoords);
+      }
+
+    
     }
 
     
