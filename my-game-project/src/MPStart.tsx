@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import './App.css'
 import Webcam from 'react-webcam'
 import { Holistic, POSE_LANDMARKS, HAND_CONNECTIONS, POSE_CONNECTIONS } from '@mediapipe/holistic'
@@ -9,9 +9,9 @@ import Button from './Button'
 const MPStart = () => {
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  let regime: string | null = null
-
+  const [leftHandCoords, setLeftHandCoords] = useState([]);
+  const [rightHandCoords, setRightHandCoords] = useState([]);
+  const [regime, setRegime] = useState("");
 
   useEffect(() => {
     const holistic = new Holistic({
@@ -46,6 +46,9 @@ const MPStart = () => {
 
 
   const onResults = (results: any) => {
+
+    
+    
     if (!canvasRef.current) return
     const canvasCtx = canvasRef.current.getContext('2d')
     if (!canvasCtx) return
@@ -62,46 +65,45 @@ const MPStart = () => {
       drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS,{color: 'white', lineWidth: 2});
       drawLandmarks(canvasCtx, results.rightHandLandmarks, {color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3});
       
-      let leftHandCoords;
-      let rightHandCoords;
+      
       if (leftHandLandmarks)  {
-        const leftHandCoords = leftHandLandmarks.map((landmark: any) => ({
+        setLeftHandCoords(leftHandLandmarks.map((landmark: any) => ({
         x: landmark.x,
         y: landmark.y
-      }));
+      })));
       console.log('Left Hand Coordinates:', leftHandCoords);
       }
       
       if (rightHandLandmarks)  {
-        const rightHandCoords = rightHandLandmarks.map((landmark: any) => ({
+        setRightHandCoords(rightHandLandmarks.map((landmark: any) => ({
         x: landmark.x,
         y: landmark.y
-      }));
+      })));
       console.log('Right Hand Coordinates:', rightHandCoords);
       }
       // checking coords for lefthand choosing a regime
-      if (regime == null && rightHandCoords && !leftHandCoords) {
+      if (regime == '' && rightHandCoords && !leftHandCoords) {
         if (rightHandCoords[8]['x'] <= 0.95 && 0.65 <= rightHandCoords[8]['x']
               && rightHandCoords[8]['y'] <= 0.7 && 0.65 <= rightHandCoords[8]['y']
           )
           {
-            regime = 'Обучение';
+            setRegime('Обучение');
           }
           
 
         if (rightHandCoords[8]['x'] <= 0.35 && 0.05 <= rightHandCoords[8]['x']
           && rightHandCoords[8]['y'] <= 0.7 && 0.65 <= rightHandCoords[8]['y']
           ) {
-            regime = 'Тестирование';
+            setRegime('Тестирование');
           }
     }
       
       // checking coords for righthand choosing a regime
-      if (regime == null && leftHandCoords && !rightHandCoords) {
+      if (regime == '' && leftHandCoords && !rightHandCoords) {
         if (leftHandCoords[8]['x'] <= 0.95 && 0.65 <= leftHandCoords[8]['x']
             && leftHandCoords[8]['y'] <= 0.7 && 0.65 <= leftHandCoords[8]['y']
         ) {
-            regime = 'Обучение';
+            setRegime('Обучение');
         }
         
 
@@ -109,11 +111,11 @@ const MPStart = () => {
           leftHandCoords[8]['x'] <= 0.35 && 0.05 <= leftHandCoords[8]['x']
               && leftHandCoords[8]['y'] <= 0.7 && 0.65 <= leftHandCoords[8]['y']
         ) {
-            regime = 'Тестирование'
+            setRegime('Тестирование');
         }
       }
 
-      
+      console.log(regime);
     
     }
     
@@ -132,7 +134,7 @@ const MPStart = () => {
         <Webcam className="webcam" audio={false} mirrored ref={webcamRef} />
       </div>
       {
-        regime == null &&
+        regime == '' &&
           <div className="options">
             <Button props={"Обучение"}/>
             <Button props={"Тестирование"}/>
