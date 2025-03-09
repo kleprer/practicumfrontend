@@ -4,10 +4,14 @@ import Webcam from 'react-webcam'
 import { Holistic, POSE_LANDMARKS, HAND_CONNECTIONS, POSE_CONNECTIONS } from '@mediapipe/holistic'
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils'
 import { Camera } from '@mediapipe/camera_utils'
+import Button from './Button'
 
 const MPStart = () => {
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  let regime: string | null = null
+
 
   useEffect(() => {
     const holistic = new Holistic({
@@ -58,7 +62,8 @@ const MPStart = () => {
       drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS,{color: 'white', lineWidth: 2});
       drawLandmarks(canvasCtx, results.rightHandLandmarks, {color: 'white', fillColor: 'rgb(255,138,0)', lineWidth: 2, radius: 3});
       
-
+      let leftHandCoords;
+      let rightHandCoords;
       if (leftHandLandmarks)  {
         const leftHandCoords = leftHandLandmarks.map((landmark: any) => ({
         x: landmark.x,
@@ -68,27 +73,84 @@ const MPStart = () => {
       }
       
       if (rightHandLandmarks)  {
-        const rightHandCoords = leftHandLandmarks.map((landmark: any) => ({
+        const rightHandCoords = rightHandLandmarks.map((landmark: any) => ({
         x: landmark.x,
         y: landmark.y
       }));
       console.log('Right Hand Coordinates:', rightHandCoords);
       }
+      // checking coords for lefthand choosing a regime
+      if (regime == null && rightHandCoords && !leftHandCoords) {
+        if (rightHandCoords[8]['x'] <= 0.95 && 0.65 <= rightHandCoords[8]['x']
+              && rightHandCoords[8]['y'] <= 0.7 && 0.65 <= rightHandCoords[8]['y']
+          )
+          {
+            regime = 'Обучение';
+          }
+          
 
+        if (rightHandCoords[8]['x'] <= 0.35 && 0.05 <= rightHandCoords[8]['x']
+          && rightHandCoords[8]['y'] <= 0.7 && 0.65 <= rightHandCoords[8]['y']
+          ) {
+            regime = 'Тестирование';
+          }
+    }
+      
+      // checking coords for righthand choosing a regime
+      if (regime == null && leftHandCoords && !rightHandCoords) {
+        if (leftHandCoords[8]['x'] <= 0.95 && 0.65 <= leftHandCoords[8]['x']
+            && leftHandCoords[8]['y'] <= 0.7 && 0.65 <= leftHandCoords[8]['y']
+        ) {
+            regime = 'Обучение';
+        }
+        
+
+        if (
+          leftHandCoords[8]['x'] <= 0.35 && 0.05 <= leftHandCoords[8]['x']
+              && leftHandCoords[8]['y'] <= 0.7 && 0.65 <= leftHandCoords[8]['y']
+        ) {
+            regime = 'Тестирование'
+        }
+      }
+
+      
     
     }
-
+    
+    
     
     canvasCtx.restore()
   }
 
+
   
 
   return (
-    <div >
-      <canvas className="canvas" ref={canvasRef}></canvas>
-      <Webcam className="webcam" audio={false} mirrored ref={webcamRef} />
+    <div className="vidwin">
+      <div >
+        <canvas className="canvas" ref={canvasRef}></canvas>
+        <Webcam className="webcam" audio={false} mirrored ref={webcamRef} />
+      </div>
+      {
+        regime == null &&
+          <div className="options">
+            <Button props={"Обучение"}/>
+            <Button props={"Тестирование"}/>
+        </div>
+        
+      }
+      {
+        regime == 'Обучение' &&
+        <p>Обучение</p>
+      }
+      {
+        regime == 'Тестирование' &&
+        <p>Тестирование</p>
+      }
+      
+    
     </div>
+    
     )
   }
 export default MPStart
