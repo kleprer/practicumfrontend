@@ -11,7 +11,7 @@ const MPStart = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const leftHandCoords = useRef([]);
   const rightHandCoords = useRef([]);
-  const regime = useRef("");
+  const [regime, setRegime] = useState("");
 
   useEffect(() => {
 
@@ -24,6 +24,8 @@ const MPStart = () => {
   useEffect(() => {
 
   }, [regime])
+
+
 
 
 
@@ -107,13 +109,13 @@ const MPStart = () => {
     }
     
     // checking coords for lefthand choosing a regime
-    if (regime.current == "" && rightHandCoords.current.length == 21 && leftHandCoords.current.length == 0) {
+    if (regime == "" && rightHandCoords.current.length == 21 && leftHandCoords.current.length == 0) {
       if (rightHandCoords.current[8]["x"] <= 0.95 && 0.65 <= rightHandCoords.current[8]["x"]
             && rightHandCoords.current[8]["y"] <= 0.7 && 0.65 <= rightHandCoords.current[8]["y"]
         )
         {
           console.log('обучение');
-          regime.current = "Обучение";
+          setRegime("Обучение");
         }
         
 
@@ -121,17 +123,17 @@ const MPStart = () => {
         && rightHandCoords.current[8]["y"] <= 0.7 && 0.65 <= rightHandCoords.current[8]["y"]
         ) {
           console.log('тест');
-          regime.current = "Тестирование";
+          setRegime("Тестирование");
         }
   }
     
     // checking coords for righthand choosing a regime
-    if (regime.current == "" && leftHandCoords.current.length == 21 && rightHandCoords.current.length == 0) {
+    if (regime == "" && leftHandCoords.current.length == 21 && rightHandCoords.current.length == 0) {
       if (leftHandCoords.current[8]["x"] <= 0.95 && 0.65 <= leftHandCoords.current[8]["x"]
           && leftHandCoords.current[8]["y"] <= 0.7 && 0.65 <= leftHandCoords.current[8]["y"]
       ) {
           console.log('обучение');
-          regime.current = "Обучение";
+          setRegime("Обучение");
       }
       
 
@@ -140,11 +142,12 @@ const MPStart = () => {
             && leftHandCoords.current[8]["y"] <= 0.7 && 0.65 <= leftHandCoords.current[8]["y"]
       ) {
           console.log('тест');
-          regime.current = "Тестирование";
+          setRegime("Тестирование");
       }
     }
     
     canvasCtx.restore();
+    regime
     
   }
 
@@ -158,19 +161,19 @@ const MPStart = () => {
         <Webcam className="webcam" audio={false} mirrored ref={webcamRef} />
       </div>
       {
-        regime.current == "" &&
+        regime == "" &&
           <div className="options">
             <Button props={"Обучение"}/>
-            <Button props={"Тестирование"}/>
+            <Button props={"Тестирование"}/> 
         </div>
         
       }
       {
-        regime.current == "Обучение" &&
+        regime  == "Обучение" &&
         <p>Обучение</p>
       }
       {
-        regime.current == "Тестирование" &&
+        regime  == "Тестирование" &&
         <p>Тестирование</p>
       }
       

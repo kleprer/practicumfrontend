@@ -71,9 +71,9 @@ button:focus-visible {
 .btn {
   width: 25vw;
   height: 6vh;
-  background-color:#a5a7c4;
+  background-color:#8a8ca3;
   border-radius: 10px;
-  opacity: 30%;
+  opacity: 60%;
   padding: auto;
   text-align: center;
 }

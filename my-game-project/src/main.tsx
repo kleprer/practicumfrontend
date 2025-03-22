@@ -7,7 +7,7 @@ import Button from './Button.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <div>
-      <div className="vidwin">
+      <div >
         <MPStart />
       </div>
     </div>
