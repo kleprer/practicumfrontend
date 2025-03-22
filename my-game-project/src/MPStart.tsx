@@ -5,6 +5,7 @@ import { Holistic, POSE_LANDMARKS, HAND_CONNECTIONS, POSE_CONNECTIONS } from "@m
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
 import { Camera } from "@mediapipe/camera_utils"
 import Button from "./Button"
+import AssetCheck from "./AssetCheck"
 
 const MPStart = () => {
   const webcamRef = useRef<Webcam>(null)
@@ -12,6 +13,10 @@ const MPStart = () => {
   const leftHandCoords = useRef([]);
   const rightHandCoords = useRef([]);
   const [regime, setRegime] = useState("");
+  const [asset, setAsset] = useState("");
+  let regimeRightNow = "";
+
+  
 
   useEffect(() => {
 
@@ -88,71 +93,74 @@ const MPStart = () => {
         x: landmark.x,
         y: landmark.y
       }));
-      console.log("Left Hand Coordinates:", leftHandCoords);
-      console.log("Right Hand Coordinates:", rightHandCoords);
+      console.log("Left Hand Coordinates:", leftHandCoords.current);
+      console.log("Right Hand Coordinates:", rightHandCoords.current);
       console.log("A");
       }
       
+
       if (rightHandLandmarks)  {
         rightHandCoords.current = rightHandLandmarks.map((landmark: any) => ({
         x: landmark.x,
         y: landmark.y
       }));
-      console.log("Right Hand Coordinates:", rightHandCoords);
-      console.log("Left Hand Coordinates:", leftHandCoords);
-      console.log("A");
+      console.log("Right Hand Coordinates:", rightHandCoords.current);
+      console.log("Left Hand Coordinates:", leftHandCoords.current);
       }
       
-
-      console.log(regime);
+      
     
-    }
     
     // checking coords for lefthand choosing a regime
-    if (regime == "" && rightHandCoords.current.length == 21 && leftHandCoords.current.length == 0) {
+    if (regimeRightNow == "" && rightHandCoords.current.length == 21 && leftHandCoords.current.length == 0) {
       if (rightHandCoords.current[8]["x"] <= 0.95 && 0.65 <= rightHandCoords.current[8]["x"]
             && rightHandCoords.current[8]["y"] <= 0.7 && 0.65 <= rightHandCoords.current[8]["y"]
         )
         {
-          console.log('обучение');
+          // console.log('обучение');
+          regimeRightNow = "Обучение";
           setRegime("Обучение");
         }
         
 
-      if (rightHandCoords.current[8]["x"] <= 0.35 && 0.05 <= rightHandCoords.current[8]["x"]
+      if (regimeRightNow == "" && rightHandCoords.current[8]["x"] <= 0.35 && 0.05 <= rightHandCoords.current[8]["x"]
         && rightHandCoords.current[8]["y"] <= 0.7 && 0.65 <= rightHandCoords.current[8]["y"]
         ) {
-          console.log('тест');
+          // console.log('тест');
+          regimeRightNow = "Тестирование";
           setRegime("Тестирование");
         }
   }
     
     // checking coords for righthand choosing a regime
-    if (regime == "" && leftHandCoords.current.length == 21 && rightHandCoords.current.length == 0) {
-      if (leftHandCoords.current[8]["x"] <= 0.95 && 0.65 <= leftHandCoords.current[8]["x"]
+    if (regimeRightNow == "" && leftHandCoords.current.length == 21 && rightHandCoords.current.length == 0) {
+      if (regime == "" && leftHandCoords.current[8]["x"] <= 0.95 && 0.65 <= leftHandCoords.current[8]["x"]
           && leftHandCoords.current[8]["y"] <= 0.7 && 0.65 <= leftHandCoords.current[8]["y"]
       ) {
-          console.log('обучение');
+          // console.log('обучение');
+          regimeRightNow = "Обучение";
           setRegime("Обучение");
+          
       }
       
 
       if (
-        leftHandCoords.current[8]["x"] <= 0.35 && 0.05 <= leftHandCoords.current[8]["x"]
+        regimeRightNow == "" && leftHandCoords.current[8]["x"] <= 0.35 && 0.05 <= leftHandCoords.current[8]["x"]
             && leftHandCoords.current[8]["y"] <= 0.7 && 0.65 <= leftHandCoords.current[8]["y"]
       ) {
-          console.log('тест');
+          // console.log('тест');
+          regimeRightNow = "Тестирование";
           setRegime("Тестирование");
+          
       }
     }
     
     canvasCtx.restore();
-    regime
     
   }
 
 
-  
+}
 
   return (
     <div className="vidwin">
@@ -161,7 +169,7 @@ const MPStart = () => {
         <Webcam className="webcam" audio={false} mirrored ref={webcamRef} />
       </div>
       {
-        regime == "" &&
+        regime == "" && 
           <div className="options">
             <Button props={"Обучение"}/>
             <Button props={"Тестирование"}/> 
@@ -170,11 +178,17 @@ const MPStart = () => {
       }
       {
         regime  == "Обучение" &&
-        <p>Обучение</p>
+        <div className="assetCheck">
+          <AssetCheck coords={rightHandCoords.current}/>
+          <p>Обучение</p>
+        </div>
       }
       {
         regime  == "Тестирование" &&
-        <p>Тестирование</p>
+        <div className="assetCheck">
+          <p>Тестирование</p>
+        </div>
+        
       }
       
     
@@ -182,4 +196,5 @@ const MPStart = () => {
     
     )
   }
+  
 export default MPStart
