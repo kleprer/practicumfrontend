@@ -6,12 +6,18 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
 import { Camera } from "@mediapipe/camera_utils"
 import Button from "./Button"
 import AssetCheck from "./AssetCheck"
+type Coordinate = {
+  x: number;
+  y: number;
+};
 
 const MPStart = () => {
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const leftHandCoords = useRef([]);
-  const rightHandCoords = useRef([]);
+  const leftHandCoords = useRef<Coordinate[]>([]);
+  const rightHandCoords = useRef<Coordinate[]>([]);
+  const [leftWorking, setLeftWorking] = useState<Coordinate[]>([]);
+  const [rightWorking, setRightWorking] = useState<Coordinate[]>([]);
   const [regime, setRegime] = useState("");
   const [asset, setAsset] = useState("");
   let regimeRightNow = "";
@@ -93,10 +99,10 @@ const MPStart = () => {
         x: landmark.x,
         y: landmark.y
       }));
-      console.log("Left Hand Coordinates:", leftHandCoords.current);
-      console.log("Right Hand Coordinates:", rightHandCoords.current);
-      console.log("A");
-      }
+      // console.log("Left Hand Coordinates:", leftHandCoords.current);
+      // console.log("Right Hand Coordinates:", rightHandCoords.current);
+    setLeftWorking(leftHandCoords.current);
+    }
       
 
       if (rightHandLandmarks)  {
@@ -104,8 +110,9 @@ const MPStart = () => {
         x: landmark.x,
         y: landmark.y
       }));
-      console.log("Right Hand Coordinates:", rightHandCoords.current);
-      console.log("Left Hand Coordinates:", leftHandCoords.current);
+      // console.log("Right Hand Coordinates:", rightHandCoords.current);
+      // console.log("Left Hand Coordinates:", leftHandCoords.current);
+      setRightWorking(rightHandCoords.current);
       }
       
       
@@ -179,7 +186,7 @@ const MPStart = () => {
       {
         regime  == "Обучение" &&
         <div className="assetCheck">
-          <AssetCheck coords={rightHandCoords.current}/>
+          <AssetCheck coords={rightWorking}/>
           <p>Обучение</p>
         </div>
       }

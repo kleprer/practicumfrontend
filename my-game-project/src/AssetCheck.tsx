@@ -8,10 +8,9 @@ type Coordinate = {
     {
         title: 'А',
         coordinates: {
-            0: [0.23, 0.25, 0.7, 0.8],
-            4: [0.3, 0.35, 0.35, 0.4],
-            6: [0.25, 0.3, 0.5, 0.45, 0.5],
-            14: [0.15, 0.2, 0.5, 0.55]
+            0: [0.2, 0.3, 0.6, 0.9],
+            6: [0.2, 0.4, 0.4, 0.5],
+            14: [0.1, 0.2, 0.4, 0.6]
         }
     },
     {
@@ -35,13 +34,20 @@ const AssetCheck = ({coords}: {coords: Coordinate[]}) => {
     const handCoords = coords;
     const [asset, setAsset] = useState(0);
     let landmark: any;
-    for (landmark in assets[asset].coordinates) {
-        console.log(landmark)
-        if (handCoords[landmark]["x"] <= landmark[1] && landmark[0] <= handCoords[landmark]["x"]
-            && handCoords[landmark]["y"] <= landmark[3] && landmark[2] <= handCoords[landmark]["y"])
-            {
-                setAsset(asset+1);
-            }
+    console.log(handCoords);
+    if (handCoords.length > 0) {
+        for (landmark in assets[asset].coordinates) {
+            console.log(handCoords[landmark]["x"])
+            console.log(handCoords[landmark]["y"])
+            
+            if (handCoords[landmark]["x"] <= landmark[1] && landmark[0] <= handCoords[landmark]["x"]
+                && handCoords[landmark]["y"] <= landmark[3] && landmark[2] <= handCoords[landmark]["y"])
+                {
+                    setAsset(asset+1);
+                    console.log("SUCCESS")
+                }
+    }
+    
     }
 
 
