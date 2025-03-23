@@ -23,15 +23,15 @@ type Coordinate = {
     {
         title: 'Б',
         coordinates: [
-            [0.15, 0.3, 0.6, 1],
-            [0.3, 0.35, 0.35, 0.4],
-            [0.15, 0.4, 0.4, 0.8],
-            [0.1, 0.2, 0.4, 0.8]
+            [0.2, 0.35, 0.35, 65],
+            [0.1, 0.35, 0.35, 65],
+            [0.15, 0.3, 0.15, 0.3],
+            [0.15, 0.35, 0.35, 0.6]
         ],
         landMarkIndexes: [
-            0,
-            6,
             4,
+            6,
+            12,
             14
         ]
     },
@@ -65,7 +65,9 @@ const AssetCheck = ({coords}: {coords: Coordinate[]}) => {
                 && handCoords[gestureIndexes[1]]["x"] <= gesture[1][1] && gesture[1][0] <= handCoords[gestureIndexes[1]]["x"]
                 && handCoords[gestureIndexes[1]]["y"] <= gesture[1][3] && gesture[1][2] <= handCoords[gestureIndexes[1]]["y"]
                 && handCoords[gestureIndexes[2]]["x"] <= gesture[2][1] && gesture[2][0] <= handCoords[gestureIndexes[2]]["x"]
-                && handCoords[gestureIndexes[2]]["y"] <= gesture[2][3] && gesture[2][2] <= handCoords[gestureIndexes[2]]["y"])
+                && handCoords[gestureIndexes[2]]["y"] <= gesture[2][3] && gesture[2][2] <= handCoords[gestureIndexes[2]]["y"]
+                && handCoords[gestureIndexes[3]]["x"] <= gesture[3][1] && gesture[3][0] <= handCoords[gestureIndexes[3]]["x"]
+                && handCoords[gestureIndexes[3]]["y"] <= gesture[3][3] && gesture[3][2] <= handCoords[gestureIndexes[3]]["y"])
                          {
                              console.log("SUCCESS")
                              setAsset(asset+1);
