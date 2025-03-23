@@ -7,14 +7,33 @@ type Coordinate = {
   const assets = [
     {
         title: 'А',
-        coordinates: {
-            0: [0.2, 0.3, 0.6, 0.9],
-            6: [0.2, 0.4, 0.4, 0.5],
-            14: [0.1, 0.2, 0.4, 0.6]
-        }
+        coordinates: [
+            [0.15, 0.3, 0.6, 1],
+            [0.3, 0.35, 0.35, 0.4],
+            [0.15, 0.4, 0.4, 0.8],
+            [0.1, 0.2, 0.4, 0.8]
+        ],
+        landMarkIndexes: [
+            0,
+            4,
+            6,
+            14
+        ]
     },
     {
-        title: 'Б'
+        title: 'Б',
+        coordinates: [
+            [0.15, 0.3, 0.6, 1],
+            [0.3, 0.35, 0.35, 0.4],
+            [0.15, 0.4, 0.4, 0.8],
+            [0.1, 0.2, 0.4, 0.8]
+        ],
+        landMarkIndexes: [
+            0,
+            6,
+            4,
+            14
+        ]
     },
     {
         title: 'В'
@@ -33,20 +52,35 @@ type Coordinate = {
 const AssetCheck = ({coords}: {coords: Coordinate[]}) => {
     const handCoords = coords;
     const [asset, setAsset] = useState(0);
-    let landmark: any;
-    console.log(handCoords);
-    if (handCoords.length > 0) {
-        for (landmark in assets[asset].coordinates) {
-            console.log(handCoords[landmark]["x"])
-            console.log(handCoords[landmark]["y"])
+    let gesture = assets[asset].coordinates;
+    let gestureIndexes = assets[asset].landMarkIndexes ;
+    console.log(gesture);
+    
+    console.log(coords)
+    if (gesture && gestureIndexes && handCoords.length > 0) {
+        console.log(handCoords[gestureIndexes[0]]["x"])
+        console.log(gesture[0][1] + " " + gesture[0][0])
+            if (handCoords[gestureIndexes[0]]["x"] <= gesture[0][1] && gesture[0][0] <= handCoords[gestureIndexes[0]]["x"]
+                && handCoords[gestureIndexes[0]]["y"] <= gesture[0][3] && gesture[0][2] <= handCoords[gestureIndexes[0]]["y"]
+                && handCoords[gestureIndexes[1]]["x"] <= gesture[1][1] && gesture[1][0] <= handCoords[gestureIndexes[1]]["x"]
+                && handCoords[gestureIndexes[1]]["y"] <= gesture[1][3] && gesture[1][2] <= handCoords[gestureIndexes[1]]["y"]
+                && handCoords[gestureIndexes[2]]["x"] <= gesture[2][1] && gesture[2][0] <= handCoords[gestureIndexes[2]]["x"]
+                && handCoords[gestureIndexes[2]]["y"] <= gesture[2][3] && gesture[2][2] <= handCoords[gestureIndexes[2]]["y"])
+                         {
+                             console.log("SUCCESS")
+                             setAsset(asset+1);
+        
+
+                     
+        }
+        // for ()
+        // console.log(landmark)
+            // 
             
-            if (handCoords[landmark]["x"] <= landmark[1] && landmark[0] <= handCoords[landmark]["x"]
-                && handCoords[landmark]["y"] <= landmark[3] && landmark[2] <= handCoords[landmark]["y"])
-                {
-                    setAsset(asset+1);
-                    console.log("SUCCESS")
-                }
-    }
+            // console.log(handCoords[landmark]["x"])
+            // console.log(landmark[0] + " " + landmark[1])
+            // console.log(handCoords[landmark]["y"])
+            // console.log(landmark[2] + " " + landmark[3])
     
     }
 
