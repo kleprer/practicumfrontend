@@ -19,7 +19,6 @@ const MPStart = () => {
   const [leftWorking, setLeftWorking] = useState<Coordinate[]>([]);
   const [rightWorking, setRightWorking] = useState<Coordinate[]>([]);
   const [regime, setRegime] = useState("");
-  const [asset, setAsset] = useState("");
   let regimeRightNow = "";
 
   
