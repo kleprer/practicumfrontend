@@ -75,14 +75,6 @@ const AssetCheck = ({coords}: {coords: Coordinate[]}) => {
 
                      
         }
-        // for ()
-        // console.log(landmark)
-            // 
-            
-            // console.log(handCoords[landmark]["x"])
-            // console.log(landmark[0] + " " + landmark[1])
-            // console.log(handCoords[landmark]["y"])
-            // console.log(landmark[2] + " " + landmark[3])
     
     }
 
