@@ -185,7 +185,7 @@ const MPStart = () => {
       {
         regime  == "Обучение" &&
         <div className="assetCheck">
-          <AssetCheck coords={rightWorking}/>
+          <AssetCheck coords={rightWorking} setRegime={setRegime}/>
           <p>Обучение</p>
         </div>
       }

@@ -399,11 +399,11 @@ type Coordinate = {
     {
         title: 'Ш Щ',
         coordinates: [
-            [0.3, 0.4, 0.4, 0.6],
-            [0.2, 0.35, 0.55, 0.7],
-            [0.2, 0.4, 0.6, 0.7],
-            [0.1, 0.35, 0.5, 0.7],
-            [0.1, 0.35, 0.6, 0.75]
+            [0.2, 0.4, 0.4, 0.6],
+            [0.2, 0.35, 0.2, 0.45],
+            [0.2, 0.4, 0.2, 0.35],
+            [0.1, 0.35, 0.2, 0.45],
+            [0.1, 0.35, 0.55, 0.75]
         ],
         landMarkIndexes: [
             4,
@@ -500,7 +500,13 @@ type Coordinate = {
     }
   ]
   
-const AssetCheck = ({coords}: {coords: Coordinate[]}) => {
+interface AssetCheckProps {
+    coords: Coordinate[];
+    setRegime: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const AssetCheck: React.FC<AssetCheckProps> = ({ coords, setRegime }) => {
+    
     const handCoords = coords;
     const [asset, setAsset] = useState(0);
     let gesture = assets[asset].coordinates;
@@ -508,6 +514,9 @@ const AssetCheck = ({coords}: {coords: Coordinate[]}) => {
     console.log(gesture);
     
     console.log(coords)
+    if (assets[asset].title == "Я") {
+        setRegime("");
+    }
     if (gesture && handCoords != undefined && gestureIndexes && handCoords.length > 0) {
             if (   handCoords[gestureIndexes[0]]["x"] <= gesture[0][1] && gesture[0][0] <= handCoords[gestureIndexes[0]]["x"]
                 && handCoords[gestureIndexes[0]]["y"] <= gesture[0][3] && gesture[0][2] <= handCoords[gestureIndexes[0]]["y"]
