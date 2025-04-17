@@ -6,12 +6,17 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
 import { Camera } from "@mediapipe/camera_utils"
 import Button from "./Button"
 import AssetCheck from "./AssetCheck"
+import TestCheck from "./TestCheck"
 type Coordinate = {
   x: number;
   y: number;
 };
 
-const MPStart = () => {
+interface MyComponentProps {
+  assets: any; // Лучше заменить any на конкретный тип
+}
+
+const MPStart: React.FC<MyComponentProps> = ({ assets }) => {
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const leftHandCoords = useRef<Coordinate[]>([]);
@@ -185,13 +190,14 @@ const MPStart = () => {
       {
         regime  == "Обучение" &&
         <div className="assetCheck">
-          <AssetCheck coords={rightWorking} setRegime={setRegime}/>
+          <AssetCheck assets={assets} coords={rightWorking} setRegime={setRegime}/>
           <p>Обучение</p>
         </div>
       }
       {
         regime  == "Тестирование" &&
         <div className="assetCheck">
+          <TestCheck assets={assets} coords={rightWorking} setRegime={setRegime}/>
           <p>Тестирование</p>
         </div>
         
