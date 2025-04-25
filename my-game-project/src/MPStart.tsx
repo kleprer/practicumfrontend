@@ -13,7 +13,7 @@ type Coordinate = {
 };
 
 interface MyComponentProps {
-  assets: any; // Лучше заменить any на конкретный тип
+  assets: any;
 }
 
 const MPStart: React.FC<MyComponentProps> = ({ assets }) => {
@@ -26,18 +26,7 @@ const MPStart: React.FC<MyComponentProps> = ({ assets }) => {
   const [regime, setRegime] = useState("");
   let regimeRightNow = "";
 
-  
-
   useEffect(() => {
-
-  }, [leftHandCoords])
-
-  useEffect(() => {
-
-  }, [rightHandCoords])
-
-  useEffect(() => {
-
   }, [regime])
 
 
@@ -103,8 +92,6 @@ const MPStart: React.FC<MyComponentProps> = ({ assets }) => {
         x: landmark.x,
         y: landmark.y
       }));
-      // console.log("Left Hand Coordinates:", leftHandCoords.current);
-      // console.log("Right Hand Coordinates:", rightHandCoords.current);
     setLeftWorking(leftHandCoords.current);
     }
       
@@ -114,21 +101,14 @@ const MPStart: React.FC<MyComponentProps> = ({ assets }) => {
         x: landmark.x,
         y: landmark.y
       }));
-      // console.log("Right Hand Coordinates:", rightHandCoords.current);
-      // console.log("Left Hand Coordinates:", leftHandCoords.current);
       setRightWorking(rightHandCoords.current);
       }
       
-      
-    
-    
-    // checking coords for lefthand choosing a regime
     if (regimeRightNow == "" && rightHandCoords.current.length == 21 && leftHandCoords.current.length == 0) {
       if (rightHandCoords.current[8]["x"] <= 0.95 && 0.65 <= rightHandCoords.current[8]["x"]
             && rightHandCoords.current[8]["y"] <= 0.7 && 0.65 <= rightHandCoords.current[8]["y"]
         )
         {
-          // console.log('обучение');
           regimeRightNow = "Обучение";
           setRegime("Обучение");
         }
@@ -137,18 +117,14 @@ const MPStart: React.FC<MyComponentProps> = ({ assets }) => {
       if (regimeRightNow == "" && rightHandCoords.current[8]["x"] <= 0.35 && 0.05 <= rightHandCoords.current[8]["x"]
         && rightHandCoords.current[8]["y"] <= 0.7 && 0.65 <= rightHandCoords.current[8]["y"]
         ) {
-          // console.log('тест');
           regimeRightNow = "Тестирование";
           setRegime("Тестирование");
         }
   }
-    
-    // checking coords for righthand choosing a regime
     if (regimeRightNow == "" && leftHandCoords.current.length == 21 && rightHandCoords.current.length == 0) {
       if (regime == "" && leftHandCoords.current[8]["x"] <= 0.95 && 0.65 <= leftHandCoords.current[8]["x"]
           && leftHandCoords.current[8]["y"] <= 0.7 && 0.65 <= leftHandCoords.current[8]["y"]
       ) {
-          // console.log('обучение');
           regimeRightNow = "Обучение";
           setRegime("Обучение");
           
@@ -159,13 +135,11 @@ const MPStart: React.FC<MyComponentProps> = ({ assets }) => {
         regimeRightNow == "" && leftHandCoords.current[8]["x"] <= 0.35 && 0.05 <= leftHandCoords.current[8]["x"]
             && leftHandCoords.current[8]["y"] <= 0.7 && 0.65 <= leftHandCoords.current[8]["y"]
       ) {
-          // console.log('тест');
           regimeRightNow = "Тестирование";
           setRegime("Тестирование");
           
       }
     }
-    
     canvasCtx.restore();
     
   }
