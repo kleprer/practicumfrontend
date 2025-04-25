@@ -36,7 +36,9 @@ const TestCheck: React.FC<TestCheckProps> = ({ coords, setRegime, assets }) => {
                     && handCoords[gestureIndexes[4]]["y"] <= gesture[4][3] && gesture[4][2] <= handCoords[gestureIndexes[4]]["y"] )
                              {
                                  console.log("SUCCESS")
-                                 setAsset(asset+1);                     
+                                 setTimeout(() => {
+                                    setAsset(asset + 1);
+                                  }, 2000);                 
             }
         
         }
