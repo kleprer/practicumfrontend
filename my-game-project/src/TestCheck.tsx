@@ -14,10 +14,10 @@ interface TestCheckProps {
 const TestCheck: React.FC<TestCheckProps> = ({ coords, setRegime, assets }) => {
 
     const handCoords = coords;
-        const [asset, setAsset] = useState(0);
-        let gesture = assets[asset].coordinates;
-        let gestureIndexes = assets[asset].landMarkIndexes ;
-        console.log(gesture);
+    const [asset, setAsset] = useState(0);
+    let gesture = assets[asset].coordinates;
+    let gestureIndexes = assets[asset].landMarkIndexes;
+    console.log(gesture);
         
         console.log(coords)
         if (assets[asset].title == "Я") {
@@ -38,7 +38,8 @@ const TestCheck: React.FC<TestCheckProps> = ({ coords, setRegime, assets }) => {
                                  console.log("SUCCESS")
                                  setTimeout(() => {
                                     setAsset(asset + 1);
-                                  }, 2000);                 
+                                  }, 2000);              
+
             }
         
         }
