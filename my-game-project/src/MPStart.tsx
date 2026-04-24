@@ -22,7 +22,7 @@ const MPStart: React.FC<MyComponentProps> = ({ assets }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const leftHandCoords = useRef<Coordinate[]>([]);
   const rightHandCoords = useRef<Coordinate[]>([]);
-  const [leftWorking, setLeftWorking] = useState<Coordinate[]>([]);
+  const [_leftWorking, setLeftWorking] = useState<Coordinate[]>([]);
   const [rightWorking, setRightWorking] = useState<Coordinate[]>([]);
   const [regime, setRegime] = useState("");
   let regimeRightNow = "";
