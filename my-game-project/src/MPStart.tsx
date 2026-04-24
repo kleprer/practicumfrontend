@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRef, useEffect, useState } from "react"
 import "./App.css"
 import Webcam from "react-webcam"
