@@ -2,7 +2,7 @@
 import { useRef, useEffect, useState } from "react"
 import "./App.css"
 import Webcam from "react-webcam"
-import { Holistic, POSE_LANDMARKS, HAND_CONNECTIONS, POSE_CONNECTIONS } from "@mediapipe/holistic"
+import { Holistic, HAND_CONNECTIONS } from "@mediapipe/holistic"
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
 import { Camera } from "@mediapipe/camera_utils"
 import Button from "./Button"
